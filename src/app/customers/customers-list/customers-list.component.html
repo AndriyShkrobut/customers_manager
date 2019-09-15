@@ -1,7 +1,7 @@
 <app-filter-input (changed)="filter($event)"></app-filter-input>
 <br />
 <br />
-<table class="table table-hover">
+<table>
   <thead>
     <tr>
       <th (click)="sort('name')">Name</th>
@@ -11,7 +11,9 @@
   </thead>
   <tr *ngFor="let customer of filteredCustomers">
     <td>
-      <a>{{ customer.name | capitalize }}</a>
+      <a [routerLink]="['/orders', customer.id]">{{
+        customer.name | capitalize
+      }}</a>
     </td>
     <td>{{ customer.city }}</td>
     <td>{{ customer.orderTotal | currency: currencyCode:'symbol' }}</td>

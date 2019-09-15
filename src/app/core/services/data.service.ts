@@ -8,7 +8,7 @@ import { IOrder } from 'src/app/models/order.model';
 
 @Injectable()
 export class DataService {
-  baseUrl = 'assets/';
+  private baseUrl = 'assets/';
 
   constructor(private http: HttpClient) {}
 
@@ -20,12 +20,9 @@ export class DataService {
 
   getCustomerById(id: number): Observable<ICustomer> {
     return this.http.get<ICustomer[]>(this.baseUrl + 'customers.json').pipe(
-      map(customers => {
-        const result = customers.filter(
-          (customer: ICustomer) => customer.id === id
-        );
-        return result && result.length ? result[0] : null;
-      }),
+      map(customers =>
+        customers.find((customer: ICustomer) => customer.id === id)
+      ),
       catchError(this.handleError)
     );
   }
