@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
+import { IAppState } from '../store/state/app.state';
 import { ICustomer } from '../models/customer.model';
+import { selectCustomerList } from '../store/selectors/customer.selectors';
 import { IOrder } from '../models/order.model';
 import { IOrderItem } from '../models/order-item.model';
-import { IAppState } from '../store/state/app.state';
-import { selectCustomerList } from '../store/selectors/customer.selectors';
 import { selectOrdersList } from '../store/selectors/order.selectors';
 
 @Component({

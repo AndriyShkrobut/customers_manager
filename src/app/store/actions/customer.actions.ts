@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+
 import { ICustomer } from 'src/app/models/customer.model';
 
 export enum ECustomerActions {

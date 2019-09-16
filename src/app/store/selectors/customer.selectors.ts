@@ -1,5 +1,6 @@
-import { IAppState } from '../state/app.state';
 import { createSelector } from '@ngrx/store';
+
+import { IAppState } from '../state/app.state';
 import { ICustomerState } from '../state/customer.state';
 
 const selectCustomers = (state: IAppState) => state.customers;
