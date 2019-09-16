@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import { ICustomer } from '../models/customer.model';
-import { DataService } from '../core/services/data.service';
 import { IOrder } from '../models/order.model';
 import { IOrderItem } from '../models/order-item.model';
+import { IAppState } from '../store/state/app.state';
+import { selectCustomerList } from '../store/selectors/customer.selectors';
+import { selectOrdersList } from '../store/selectors/order.selectors';
 
 @Component({
   selector: 'app-customers',
@@ -11,16 +15,21 @@ import { IOrderItem } from '../models/order-item.model';
 })
 export class CustomersComponent implements OnInit {
   title: string;
-  people: ICustomer[];
+  customers: ICustomer[];
 
-  constructor(private dataService: DataService) {}
+  customers$: Observable<ICustomer[]> = this._store.pipe(
+    select(selectCustomerList)
+  );
+  orders$: Observable<IOrder[]> = this._store.pipe(select(selectOrdersList));
+
+  constructor(private _store: Store<IAppState>) {}
 
   ngOnInit() {
     this.title = 'Customers';
 
-    this.dataService.getOrders().subscribe((orders: IOrder[]) => {
-      this.dataService.getCustomers().subscribe((customers: ICustomer[]) => {
-        this.people = customers.map((customer: ICustomer) => {
+    this.customers$.subscribe((customers: ICustomer[]) => {
+      this.orders$.subscribe((orders: IOrder[]) => {
+        this.customers = customers.map((customer: ICustomer) => {
           const customerOrder = orders.find(
             (order: IOrder) => order.customerId === customer.id
           );
